@@ -24,4 +24,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency "database_cleaner"
   s.add_development_dependency "sqlite3"
   s.add_development_dependency "rails", ">= 4.0.0"
+
+  s.required_ruby_version = '>= 2.1'
 end

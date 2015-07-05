@@ -12,14 +12,14 @@ module Inkwell
       def acts_as_inkwell_user
         has_many :comments, class_name: 'Inkwell::Comment'
         has_many :following_relations, :class_name => 'Inkwell::Following', :foreign_key => :follower_id
-        has_many :followings, :through => :following_relations, :class_name => ::Inkwell::Engine::config.user_table.to_s.singularize.capitalize
+        has_many :followings, :through => :following_relations, :class_name => Inkwell.user_class
         has_many :follower_relations, :class_name => 'Inkwell::Following', :foreign_key => :followed_id
-        has_many :followers, :through => :follower_relations, :class_name => ::Inkwell::Engine::config.user_table.to_s.singularize.capitalize
-        if ::Inkwell::Engine::config.respond_to?('community_table')
+        has_many :followers, :through => :follower_relations, :class_name => Inkwell.user_class
+        if Inkwell.community_class
           has_many :communities_users, :class_name => 'Inkwell::CommunityUser'
-          has_many :communities, -> {where "inkwell_community_users.active" => true}, :through => :communities_users, :class_name => ::Inkwell::Engine::config.community_table.to_s.singularize.capitalize
+          has_many :communities, -> {where "inkwell_community_users.active" => true}, :through => :communities_users, :class_name => Inkwell.community_class
         end
-        if ::Inkwell::Engine::config.respond_to?('category_table')
+        if Inkwell.category_class
           has_many :categories, as: :categoryable
         end
         before_destroy :destroy_processing
@@ -89,8 +89,8 @@ module Inkwell
       end
 
       def communities_row
-        user_id = "#{::Inkwell::Engine::config.user_table.to_s.singularize}_id"
-        community_id = "#{::Inkwell::Engine::config.community_table.to_s.singularize}_id"
+        user_id = "#{Inkwell.user_singular}_id"
+        community_id = "#{Inkwell.community_singular}_id"
 
         relations = ::Inkwell::CommunityUser.where user_id => self.id
         result = []
@@ -434,7 +434,7 @@ module Inkwell
 
 
       def destroy_processing
-        if ::Inkwell::Engine::config.respond_to?('community_table')
+        if Inkwell.community_class
           raise "there is community where this user is owner. Change their owner before destroy this user." unless community_class.where(:owner_id => self.id).empty?
 
           communities_relations = ::Inkwell::CommunityUser.where user_id_attr => self.id

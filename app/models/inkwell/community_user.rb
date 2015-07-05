@@ -1,18 +1,18 @@
 module Inkwell
-  if ::Inkwell::Engine::config.respond_to?('community_table')
+  if Inkwell.community_class
     class CommunityUser < ActiveRecord::Base
-      belongs_to ::Inkwell::Engine::config.community_table.to_s.singularize.to_sym
-      belongs_to ::Inkwell::Engine::config.user_table.to_s.singularize.to_sym
-      belongs_to :admins, :foreign_key => "#{::Inkwell::Engine::config.user_table.to_s.singularize}_id",
-                 class_name: ::Inkwell::Engine::config.user_table.to_s.singularize.capitalize
-      belongs_to :writers, :foreign_key => "#{::Inkwell::Engine::config.user_table.to_s.singularize}_id",
-                 class_name: ::Inkwell::Engine::config.user_table.to_s.singularize.capitalize
-      belongs_to :muted_users, :foreign_key => "#{::Inkwell::Engine::config.user_table.to_s.singularize}_id",
-                 class_name: ::Inkwell::Engine::config.user_table.to_s.singularize.capitalize
-      belongs_to :banned_users, :foreign_key => "#{::Inkwell::Engine::config.user_table.to_s.singularize}_id",
-                 class_name: ::Inkwell::Engine::config.user_table.to_s.singularize.capitalize
-      belongs_to :asked_invitation_users, :foreign_key => "#{::Inkwell::Engine::config.user_table.to_s.singularize}_id",
-                 class_name: ::Inkwell::Engine::config.user_table.to_s.singularize.capitalize
+      belongs_to Inkwell.community_singular.to_sym
+      belongs_to Inkwell.user_singular.to_sym
+      belongs_to :admins, :foreign_key => "#{Inkwell.user_singular}_id",
+                 class_name: Inkwell.user_class
+      belongs_to :writers, :foreign_key => "#{Inkwell.user_singular}_id",
+                 class_name: Inkwell.user_class
+      belongs_to :muted_users, :foreign_key => "#{Inkwell.user_singular}_id",
+                 class_name: Inkwell.user_class
+      belongs_to :banned_users, :foreign_key => "#{Inkwell.user_singular}_id",
+                 class_name: Inkwell.user_class
+      belongs_to :asked_invitation_users, :foreign_key => "#{Inkwell.user_singular}_id",
+                 class_name: Inkwell.user_class
     end
   end
 end

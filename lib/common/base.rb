@@ -36,8 +36,7 @@ module Inkwell
     end
 
     def check_user(obj)
-      user_class = Object.const_get ::Inkwell::Engine::config.user_table.to_s.singularize.capitalize
-      raise "user should be a #{user_class.to_s}" unless obj.is_a? user_class
+      raise "user should be a #{user_class.to_s}" unless obj.is_a? Inkwell.user_class
     end
 
     def check_post(obj)
@@ -46,27 +45,11 @@ module Inkwell
     end
 
     def user_id_attr
-      "#{::Inkwell::Engine::config.user_table.to_s.singularize}_id"
-    end
-
-    def user_class
-      Object.const_get ::Inkwell::Engine::config.user_table.to_s.singularize.capitalize
-    end
-
-    def post_class
-      Object.const_get ::Inkwell::Engine::config.post_table.to_s.singularize.capitalize
+      "#{Inkwell.user_singular}_id"
     end
 
     def community_id_attr
-      "#{::Inkwell::Engine::config.community_table.to_s.singularize}_id"
-    end
-
-    def community_class
-      Object.const_get ::Inkwell::Engine::config.community_table.to_s.singularize.capitalize
-    end
-
-    def category_class
-      Object.const_get ::Inkwell::Engine::config.category_table.to_s.singularize.capitalize
+      "#{Inkwell.community_singular}_id"
     end
   end
 

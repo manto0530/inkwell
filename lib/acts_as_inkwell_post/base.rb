@@ -78,8 +78,8 @@ module Inkwell
       private
 
       def processing_a_post
-        user_class = Object.const_get ::Inkwell::Engine::config.user_table.to_s.singularize.capitalize
-        user_id_attr = "#{::Inkwell::Engine::config.user_table.to_s.singularize}_id"
+        user_class = Inkwell.user_class
+        user_id_attr = "#{Inkwell.user_singular}_id"
         user = user_class.find self.send(user_id_attr)
         ::Inkwell::BlogItem.create :item_id => self.id, :is_reblog => false, :owner_id => self.send(user_id_attr), :owner_type => OwnerTypes::USER, :item_type => ItemTypes::POST
         user.followers_row.each do |user_id|

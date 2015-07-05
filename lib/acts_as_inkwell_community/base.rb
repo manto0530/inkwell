@@ -359,10 +359,10 @@ module Inkwell
         raise "user should be a member of community" unless self.include_user?(user)
         raise "post should be passed in params" unless post
         check_post post
-        user_class = Object.const_get ::Inkwell::Engine::config.user_table.to_s.singularize.capitalize
+        Inkwell.user_class =  Inkwell.user_class
         user_id_attr = "#{::Inkwell::Engine::config.user_table.to_s.singularize}_id"
         if self.include_admin?(user)
-          post_owner = user_class.find post.send(user_id_attr)
+          post_owner = Inkwell.user_class.find post.send(user_id_attr)
           raise "admin tries to remove post of another admin. not enough permissions" if
               (self.include_admin? post_owner) && (self.admin_level_of(user) > self.admin_level_of(post_owner))
         else
@@ -554,7 +554,7 @@ module Inkwell
         raise "array with users objects or ids should be passed" unless arr.class == Array
         raise "empty array passed in params" if arr.empty?
         uids = []
-        if arr[0].is_a? user_class
+        if arr[0].is_a? Inkwell.user_class
           arr.each do |user|
             uids << user.id
           end
@@ -574,7 +574,7 @@ module Inkwell
         raise "array with users ids should be passed" unless arr.class == Array
         raise "empty array passed in params" if arr.empty?
         uids = []
-        if arr[0].is_a? user_class
+        if arr[0].is_a? Inkwell.user_class
           arr.each do |user|
             uids << user.id
           end
@@ -609,7 +609,7 @@ module Inkwell
       private
 
       def processing_a_community
-        owner = user_class.find self.owner_id
+        owner = Inkwell.user_class.find self.owner_id
         owner.community_count += 1
         owner.save
 
@@ -620,7 +620,7 @@ module Inkwell
       def destroy_community_processing
         users_ids = self.users_row
         users_ids.each do |uid|
-          user = user_class.find uid
+          user = Inkwell.user_class.find uid
           user.community_count -= 1
           user.save
         end
