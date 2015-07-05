@@ -13,7 +13,7 @@
 
 ActiveRecord::Schema.define(version: 20140223111526) do
 
-  create_table "categories", force: true do |t|
+  create_table "categories", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 20140223111526) do
   add_index "categories", ["parent_id"], name: "index_categories_on_parent_id"
   add_index "categories", ["rgt"], name: "index_categories_on_rgt"
 
-  create_table "communities", force: true do |t|
+  create_table "communities", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 20140223111526) do
     t.integer  "invitation_count",    default: 0
   end
 
-  create_table "inkwell_blog_item_categories", force: true do |t|
+  create_table "inkwell_blog_item_categories", force: :cascade do |t|
     t.integer  "blog_item_id"
     t.integer  "category_id"
     t.datetime "blog_item_created_at"
@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(version: 20140223111526) do
   add_index "inkwell_blog_item_categories", ["blog_item_id"], name: "index_inkwell_blog_item_categories_on_blog_item_id"
   add_index "inkwell_blog_item_categories", ["category_id"], name: "index_inkwell_blog_item_categories_on_category_id"
 
-  create_table "inkwell_blog_items", force: true do |t|
+  create_table "inkwell_blog_items", force: :cascade do |t|
     t.integer  "item_id"
     t.boolean  "is_reblog"
     t.datetime "created_at"
@@ -67,7 +67,7 @@ ActiveRecord::Schema.define(version: 20140223111526) do
     t.text     "category_ids", default: "[]"
   end
 
-  create_table "inkwell_comments", force: true do |t|
+  create_table "inkwell_comments", force: :cascade do |t|
     t.integer  "user_id"
     t.text     "body"
     t.integer  "parent_id"
@@ -86,7 +86,7 @@ ActiveRecord::Schema.define(version: 20140223111526) do
   add_index "inkwell_comments", ["rgt"], name: "index_inkwell_comments_on_rgt"
   add_index "inkwell_comments", ["user_id"], name: "index_inkwell_comments_on_user_id"
 
-  create_table "inkwell_community_users", force: true do |t|
+  create_table "inkwell_community_users", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "community_id"
     t.string   "user_access",      default: "r"
@@ -100,7 +100,7 @@ ActiveRecord::Schema.define(version: 20140223111526) do
     t.boolean  "asked_invitation", default: false
   end
 
-  create_table "inkwell_favorite_items", force: true do |t|
+  create_table "inkwell_favorite_items", force: :cascade do |t|
     t.integer  "item_id"
     t.integer  "owner_id"
     t.datetime "created_at"
@@ -109,14 +109,14 @@ ActiveRecord::Schema.define(version: 20140223111526) do
     t.string   "owner_type"
   end
 
-  create_table "inkwell_followings", force: true do |t|
+  create_table "inkwell_followings", force: :cascade do |t|
     t.integer  "follower_id"
     t.integer  "followed_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "inkwell_timeline_items", force: true do |t|
+  create_table "inkwell_timeline_items", force: :cascade do |t|
     t.integer  "item_id"
     t.integer  "owner_id"
     t.text     "from_source",      default: "[]"
@@ -127,7 +127,7 @@ ActiveRecord::Schema.define(version: 20140223111526) do
     t.string   "owner_type"
   end
 
-  create_table "posts", force: true do |t|
+  create_table "posts", force: :cascade do |t|
     t.string   "title"
     t.text     "body"
     t.integer  "user_id"
@@ -139,7 +139,7 @@ ActiveRecord::Schema.define(version: 20140223111526) do
     t.text     "communities_ids",           default: "[]"
   end
 
-  create_table "users", force: true do |t|
+  create_table "users", force: :cascade do |t|
     t.string   "nick"
     t.datetime "created_at"
     t.datetime "updated_at"
