@@ -16,9 +16,10 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*"] + ["Rakefile"] + %w(MIT-LICENSE README_RU.rdoc README.md)
   s.test_files = Dir["test/**/*"] - Dir["**/*.log"]
 
-  s.add_dependency "railties", ">= 4.0.0"
-  s.add_dependency "activerecord", ">= 4.0.0"
-  s.add_dependency "awesome_nested_set", "~> 3.0"
+  s.add_dependency 'railties', '>= 4.0.0'
+  s.add_dependency 'activerecord', '>= 4.0.0'
+  s.add_dependency 'awesome_nested_set', '~> 3.0'
+  s.add_dependency 'kaminari'
 
   s.add_development_dependency "rspec-rails"
   s.add_development_dependency "database_cleaner"

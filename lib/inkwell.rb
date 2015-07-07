@@ -1,5 +1,6 @@
 require 'inkwell/engine'
 require 'awesome_nested_set'
+require 'kaminari'
 require 'acts_as_inkwell_blog_owner/base'
 require 'acts_as_inkwell_post/base'
 require 'acts_as_inkwell_community/base'
