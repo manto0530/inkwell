@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150706214023) do
+ActiveRecord::Schema.define(version: 20150708201526) do
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
@@ -23,6 +23,11 @@ ActiveRecord::Schema.define(version: 20150706214023) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "companies", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "inkwell_blog_items", force: :cascade do |t|
@@ -37,10 +42,15 @@ ActiveRecord::Schema.define(version: 20150706214023) do
   add_index "inkwell_blog_items", ["blogging_owner_id", "blogging_owner_type"], name: "index_blog_items_on_owner"
 
   create_table "posts", force: :cascade do |t|
-    t.string   "title"
-    t.text     "body"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "products", force: :cascade do |t|
+    t.integer  "company_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|

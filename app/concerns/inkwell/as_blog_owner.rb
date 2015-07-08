@@ -1,5 +1,5 @@
 module Inkwell
-  module BlogOwner
+  module AsBlogOwner
     extend ActiveSupport::Concern
 
     included do

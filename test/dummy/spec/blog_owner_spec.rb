@@ -3,9 +3,10 @@ require 'spec_helper'
 describe 'Blog owner' do
   before :each do
     # ActiveRecord::Base.logger = Logger.new(STDOUT) # TODO remove before release
-    @posts = (0..30).to_a.map{|i|Post.create!}
-    @other_posts = (0..10).to_a.map{|i|Post.create!}
     @user = User.create!
+    other_user = User.create!
+    @posts = (0..30).to_a.map{|i| Post.create! user: other_user}
+    @other_posts = (0..10).to_a.map{|i| Post.create! user: other_user}
     @posts.each {|post| Inkwell::BlogItem.create! blogged_item: post, blogging_owner: @user}
   end
 
@@ -16,6 +17,10 @@ describe 'Blog owner' do
       result.each do |item|
         expect(item.class).to eq(Post)
       end
+    end
+
+    it 'should return only this user objects' do
+      expect(@user.blog(per_page: 100).size).to eq(@user.blog_items.size)
     end
 
     describe 'pagination' do
@@ -33,9 +38,5 @@ describe 'Blog owner' do
         expect(@user.blog(per_page: 20).size).to eq(20)
       end
     end
-  end
-
-  it 'should return objects' do
-    puts @user.blog.inspect
   end
 end
