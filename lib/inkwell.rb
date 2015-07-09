@@ -3,14 +3,13 @@ require 'awesome_nested_set'
 require 'kaminari'
 require 'acts_as_inkwell_blog_owner/base'
 require 'acts_as_inkwell_blog_item/base'
-require 'acts_as_inkwell_post/base'
 require 'acts_as_inkwell_community/base'
+require 'acts_as_inkwell_community_user/base'
 require 'acts_as_inkwell_category/base'
-require 'common/base'
 require 'exceptions/inkwell'
 
 module Inkwell
-  %w{blog}.each do |feature|
+  %w{blog community}.each do |feature|
     mattr_writer "#{feature}_feature".to_sym
 
     define_singleton_method "#{feature}_feature" do

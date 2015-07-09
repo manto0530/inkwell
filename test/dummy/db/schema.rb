@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150708201526) do
+ActiveRecord::Schema.define(version: 20150709163601) do
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
@@ -40,6 +40,20 @@ ActiveRecord::Schema.define(version: 20150708201526) do
 
   add_index "inkwell_blog_items", ["blogged_item_id", "blogged_item_type"], name: "index_blog_items_on_item"
   add_index "inkwell_blog_items", ["blogging_owner_id", "blogging_owner_type"], name: "index_blog_items_on_owner"
+
+  create_table "inkwell_communities_users", force: :cascade do |t|
+    t.integer  "community_user_id"
+    t.string   "community_user_type"
+    t.integer  "community_id"
+    t.string   "community_type"
+    t.integer  "user_access"
+    t.integer  "admin_level"
+    t.boolean  "muted",               default: false
+    t.datetime "created_at",                          null: false
+    t.boolean  "active",              default: false
+    t.boolean  "banned",              default: false
+    t.boolean  "asked_invitation",    default: false
+  end
 
   create_table "posts", force: :cascade do |t|
     t.integer  "user_id"
