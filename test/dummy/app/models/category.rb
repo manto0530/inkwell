@@ -1,4 +1,4 @@
 class Category < ActiveRecord::Base
 
-  acts_as_inkwell_category
+  acts_as_category
 end

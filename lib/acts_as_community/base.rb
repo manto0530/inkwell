@@ -1,5 +1,5 @@
 module Inkwell
-  module ActsAsInkwellCommunity
+  module ActsAsCommunity
     module Base
       def self.included(klass)
         klass.class_eval do
@@ -9,7 +9,7 @@ module Inkwell
     end
 
     module Config
-      def acts_as_inkwell_community
+      def acts_as_community
         include ::Inkwell::AsCommunity
 
         # if ::Inkwell::Engine::config.respond_to?('community_table')
@@ -653,4 +653,4 @@ module Inkwell
   end
 end
 
-::ActiveRecord::Base.send :include, ::Inkwell::ActsAsInkwellCommunity::Base
+::ActiveRecord::Base.send :include, ::Inkwell::ActsAsCommunity::Base

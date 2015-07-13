@@ -1,5 +1,5 @@
 module Inkwell
-  module ActsAsInkwellBlogOwner
+  module WithFavoriteFeature
     module Base
       def self.included(klass)
         klass.class_eval do
@@ -9,11 +9,11 @@ module Inkwell
     end
 
     module Config
-      def acts_as_inkwell_blog_owner
-        include ::Inkwell::AsBlogOwner
+      def can_be_favorited
+        include ::Inkwell::AsFavoritable
       end
     end
   end
 end
 
-::ActiveRecord::Base.send :include, ::Inkwell::ActsAsInkwellBlogOwner::Base
+::ActiveRecord::Base.send :include, ::Inkwell::WithFavoriteFeature::Base

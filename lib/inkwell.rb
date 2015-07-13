@@ -1,15 +1,17 @@
 require 'inkwell/engine'
 require 'awesome_nested_set'
 require 'kaminari'
-require 'acts_as_inkwell_blog_owner/base'
-require 'acts_as_inkwell_blog_item/base'
-require 'acts_as_inkwell_community/base'
-require 'acts_as_inkwell_community_user/base'
-require 'acts_as_inkwell_category/base'
+require 'acts_as_blog_owner/base'
+require 'acts_as_blog_item/base'
+require 'acts_as_community/base'
+require 'acts_as_community_user/base'
+require 'acts_as_category/base'
+require 'acts_as_favorited_objects_owner/base'
+require 'can_be_favorited/base'
 require 'exceptions/inkwell'
 
 module Inkwell
-  %w{blog community}.each do |feature|
+  %w{blog community favorite}.each do |feature|
     mattr_writer "#{feature}_feature".to_sym
 
     define_singleton_method "#{feature}_feature" do

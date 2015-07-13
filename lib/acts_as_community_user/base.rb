@@ -1,5 +1,5 @@
 module Inkwell
-  module ActsAsInkwellCommunityUser
+  module ActsAsCommunityUser
     module Base
       def self.included(klass)
         klass.class_eval do
@@ -9,11 +9,11 @@ module Inkwell
     end
 
     module Config
-      def acts_as_inkwell_community_user
+      def acts_as_community_user
         include ::Inkwell::AsCommunityUser
       end
     end
   end
 end
 
-::ActiveRecord::Base.send :include, ::Inkwell::ActsAsInkwellCommunityUser::Base
+::ActiveRecord::Base.send :include, ::Inkwell::ActsAsCommunityUser::Base

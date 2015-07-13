@@ -1,5 +1,5 @@
 module Inkwell
-  module ActsAsInkwellCategory
+  module ActsAsCategory
     module Base
       def self.included(klass)
         klass.class_eval do
@@ -9,7 +9,7 @@ module Inkwell
     end
 
     module Config
-      def acts_as_inkwell_category
+      def acts_as_category
 
         # validates_presence_of :categoryable
         # before_destroy :before_destroy_processing
@@ -60,4 +60,4 @@ module Inkwell
   end
 end
 
-::ActiveRecord::Base.send :include, ::Inkwell::ActsAsInkwellCategory::Base
+::ActiveRecord::Base.send :include, ::Inkwell::ActsAsCategory::Base
