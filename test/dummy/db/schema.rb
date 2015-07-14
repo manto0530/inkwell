@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150709163601) do
+ActiveRecord::Schema.define(version: 20150714161024) do
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 20150709163601) do
     t.string   "blogged_item_type"
     t.integer  "blogging_owner_id"
     t.string   "blogging_owner_type"
-    t.datetime "created_at"
+    t.datetime "created_at",          null: false
   end
 
   add_index "inkwell_blog_items", ["blogged_item_id", "blogged_item_type"], name: "index_blog_items_on_item"
@@ -49,11 +49,25 @@ ActiveRecord::Schema.define(version: 20150709163601) do
     t.integer  "user_access"
     t.integer  "admin_level"
     t.boolean  "muted",               default: false
-    t.datetime "created_at",                          null: false
     t.boolean  "active",              default: false
     t.boolean  "banned",              default: false
     t.boolean  "asked_invitation",    default: false
+    t.datetime "created_at",                          null: false
   end
+
+  add_index "inkwell_communities_users", ["community_id", "community_type"], name: "index_community_user_on_community"
+  add_index "inkwell_communities_users", ["community_user_id", "community_user_type"], name: "index_community_user_on_user"
+
+  create_table "inkwell_favorited_items", force: :cascade do |t|
+    t.integer  "favorited_id"
+    t.string   "favorited_type"
+    t.integer  "favoriting_id"
+    t.string   "favoriting_type"
+    t.datetime "created_at",      null: false
+  end
+
+  add_index "inkwell_favorited_items", ["favorited_id", "favorited_type"], name: "index_favorited_items_on_item"
+  add_index "inkwell_favorited_items", ["favoriting_id", "favoriting_type"], name: "index_favorited_items_on_user"
 
   create_table "posts", force: :cascade do |t|
     t.integer  "user_id"

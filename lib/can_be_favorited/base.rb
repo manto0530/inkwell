@@ -1,5 +1,5 @@
 module Inkwell
-  module WithFavoriteFeature
+  module CanBeFavorited
     module Base
       def self.included(klass)
         klass.class_eval do
@@ -16,4 +16,4 @@ module Inkwell
   end
 end
 
-::ActiveRecord::Base.send :include, ::Inkwell::WithFavoriteFeature::Base
+::ActiveRecord::Base.send :include, ::Inkwell::CanBeFavorited::Base
