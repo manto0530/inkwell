@@ -38,5 +38,32 @@ describe 'Blog owner' do
         expect(@user.blog(per_page: 20).size).to eq(20)
       end
     end
+
+    describe 'favorites' do
+      it 'should return not favorited object without for_viewer' do
+        user = User.create!
+        Post.create! user: user
+        expect(user.blog.size).to eq(1)
+        item = user.blog.first
+        expect(item.favorited?).to eq(false)
+      end
+
+      it 'should return not favorited object with for_viewer' do
+        user = User.create!
+        Post.create! user: user
+        expect(user.blog(for_viewer: @user).size).to eq(1)
+        item = user.blog(for_viewer: @user).first
+        expect(item.favorited?).to eq(false)
+      end
+
+      it 'should return favorited object with for_viewer' do
+        user = User.create!
+        post = Post.create! user: user
+        @user.favorite(post)
+        expect(user.blog(for_viewer: @user).size).to eq(1)
+        item = user.blog(for_viewer: @user).first
+        expect(item.favorited?).to eq(true)
+      end
+    end
   end
 end
