@@ -8,7 +8,6 @@ module Inkwell
 
       def create_blog_item
         raise(
-            Inkwell::Exceptions::Blog::UndefinedBlogItemOwner,
             "#{self.class.name}#blog_item_owner returns #{blog_item_owner.inspect}.
             Blog item owner should be present.
             If blog item should not be created now -

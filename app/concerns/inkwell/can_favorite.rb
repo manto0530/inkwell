@@ -1,5 +1,5 @@
 module Inkwell
-  module AsFavoritedObjectsOwner
+  module CanFavorite
     extend ActiveSupport::Concern
 
     included do

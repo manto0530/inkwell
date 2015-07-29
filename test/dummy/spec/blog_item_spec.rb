@@ -27,6 +27,6 @@ describe 'Blog item' do
   end
 
   it 'should raise exception when need_to_create_blog_item? is true but owner is undefined' do
-    expect{Post.create!}.to raise_error(Inkwell::Exceptions::Blog::UndefinedBlogItemOwner)
+    expect{Post.create!}.to raise_error(/Blog item owner should be present/)
   end
 end

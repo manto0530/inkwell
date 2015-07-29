@@ -6,12 +6,11 @@ require 'acts_as_blog_item/base'
 require 'acts_as_community/base'
 require 'acts_as_community_user/base'
 require 'acts_as_category/base'
-require 'acts_as_favorited_objects_owner/base'
+require 'can_favorite_objects/base'
 require 'can_be_favorited/base'
-require 'exceptions/inkwell'
 
 module Inkwell
-  %w{blog community favorite}.each do |feature|
+  %w{blog community favorite reblog}.each do |feature|
     mattr_writer "#{feature}_feature".to_sym
 
     define_singleton_method "#{feature}_feature" do

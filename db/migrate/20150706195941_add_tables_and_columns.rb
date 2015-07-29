@@ -7,10 +7,16 @@ class AddTablesAndColumns < ActiveRecord::Migration
         t.integer :blogging_owner_id
         t.string :blogging_owner_type
         t.datetime :created_at, null: false
+        if Inkwell.reblog_feature
+          t.boolean :is_reblog, default: false
+          t.integer :reblogged_owner_id
+          t.string :reblogged_owner_type
+        end
       end
 
       add_index :inkwell_blog_items, [:blogged_item_id, :blogged_item_type], name: :index_blog_items_on_item
       add_index :inkwell_blog_items, [:blogging_owner_id, :blogging_owner_type], name: :index_blog_items_on_owner
+      add_index :inkwell_blog_items, [:reblogged_owner_id, :reblogged_owner_type], name: :index_blog_items_on_reblog_owner
     end
 
     if Inkwell.community_feature
