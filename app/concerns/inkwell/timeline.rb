@@ -15,6 +15,19 @@ module Inkwell
         end
         result
       end
+
+      def process_reblog_feature(result, for_viewer: nil)
+        if Inkwell.reblog_feature && for_viewer && for_viewer.methods.include?(:blog_items)
+          items_with_reblogging = result.select{|item| item.methods.include?(:reblogged=)}
+          items_with_reblogging.map(&:class).uniq.each do |klass|
+            ids = items_with_reblogging.select{|item| item.is_a?(klass)}.map(&:id)
+            for_viewer.blog_items.where(blogged_item_id: ids, blogged_item_type: klass.name, is_reblog: true).each do |reblog|
+              result.detect{|item| item.id == reblog.blogged_item_id && item.class.name == reblog.blogged_item_type}.reblogged = true
+            end
+          end
+        end
+        result
+      end
     end
   end
 end

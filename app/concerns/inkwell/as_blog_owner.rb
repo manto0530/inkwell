@@ -8,8 +8,13 @@ module Inkwell
       has_many :blog_items, class_name: 'Inkwell::BlogItem', as: :blogging_owner
 
       def blog(page: 1, per_page: nil, order: 'created_at DESC', for_viewer: nil)
-        result = blog_items.order(order).includes(:blogged_item).page(page).per(per_page || blog_items_per_page).map(&:blogged_item)
-        process_favorite_feature(result, for_viewer: for_viewer)
+        result = blog_items.order(order).includes(:blogged_item).page(page).per(per_page || blog_items_per_page).map do |blog_item|
+          item = blog_item.blogged_item
+          item.try(:reblog=, blog_item.try(:is_reblog)) if Inkwell.reblog_feature
+          item
+        end
+        result = process_favorite_feature(result, for_viewer: for_viewer)
+        process_reblog_feature(result, for_viewer: for_viewer)
       end
 
       def blog_items_per_page
@@ -28,7 +33,7 @@ module Inkwell
         end
 
         def reblog?(obj)
-          blog_items.exists?(blogged_item: obj)
+          blog_items.exists?(blogged_item: obj, is_reblog: true)
         end
 
         def unreblog(obj)

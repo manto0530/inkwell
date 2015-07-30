@@ -23,7 +23,8 @@ module Inkwell
 
       def favorites(page: 1, per_page: nil, order: 'created_at DESC', for_viewer: nil)
         result = favorited_items.order(order).includes(:favorited).page(page).per(per_page || favorited_items_per_page).map(&:favorited)
-        process_favorite_feature(result, for_viewer: for_viewer)
+        result = process_favorite_feature(result, for_viewer: for_viewer)
+        process_reblog_feature(result, for_viewer: for_viewer)
       end
 
       def favorited_items_per_page

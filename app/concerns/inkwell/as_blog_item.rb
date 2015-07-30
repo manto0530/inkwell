@@ -23,6 +23,24 @@ module Inkwell
       def need_to_create_blog_item?
         true
       end
+
+      if Inkwell.reblog_feature
+        attr_accessor :reblogged
+        def reblogged?; !!reblogged; end
+        attr_accessor :reblog
+        def reblog?; !!reblog; end
+
+        def reblogged_by(page: nil, per_page: nil, order: 'created_at DESC')
+          result = blog_items.where(is_reblog: true).includes(:blogging_owner).order(order)
+          result = result.page(page).per(per_page || reblogged_by_per_page) if page
+          result.map(&:blogging_owner)
+        end
+
+        def reblogged_by_per_page
+          10
+        end
+      end
+
     end
   end
 end

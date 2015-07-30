@@ -109,4 +109,37 @@ describe 'Favorited item' do
     end
   end
 
+  describe 'favorites with reblog feature' do
+    before :each do
+      @user_1 = User.create!
+    end
+
+    it 'should return reblogged item for reblog owner' do
+      @user_1.favorite(@post)
+      @user_1.reblog(@post)
+      result = @user_1.favorites(for_viewer: @user_1)
+      expect(result.size).to eq(1)
+      expect(result[0]).to eq(@post)
+      expect(result[0].reblogged?).to eq(true)
+    end
+
+    it 'should return not reblogged item for not reblog owner' do
+      @user_1.favorite(@post)
+      @user_1.reblog(@post)
+      result = @user_1.favorites(for_viewer: @user)
+      expect(result.size).to eq(1)
+      expect(result[0]).to eq(@post)
+      expect(result[0].reblogged?).to eq(false)
+    end
+
+    it 'should return not reblogged item without viewer' do
+      @user_1.favorite(@post)
+      @user_1.reblog(@post)
+      result = @user_1.favorites
+      expect(result.size).to eq(1)
+      expect(result[0]).to eq(@post)
+      expect(result[0].reblogged?).to eq(false)
+    end
+  end
+
 end
