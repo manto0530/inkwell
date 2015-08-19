@@ -50,5 +50,24 @@ class AddTablesAndColumns < ActiveRecord::Migration
       add_index :inkwell_favorited_items, [:favorited_id, :favorited_type], name: :index_favorited_items_on_item
       add_index :inkwell_favorited_items, [:favoriting_id, :favoriting_type], name: :index_favorited_items_on_user
     end
+
+    if Inkwell.comment_feature
+      create_table :inkwell_comments do |t|
+        t.integer  :owner_id
+        t.string   :owner_type
+        t.text     :body
+        t.integer  :parent_id, null: false, index: true
+        t.integer  :lft, null: false, index: true
+        t.integer  :rgt, null: false, index: true
+        t.integer  :depth, null: false, default: 0
+        t.integer  :children_count, null: false, default: 0
+        t.integer  :commentable_id
+        t.string   :commentable_type
+        t.datetime :created_at, null: false
+        t.datetime :updated_at, null: false
+      end
+
+      add_index :inkwell_comments, [:owner_id, :owner_type], name: :index_comments_on_owner
+    end
   end
 end

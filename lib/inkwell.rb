@@ -2,6 +2,7 @@ require 'inkwell/engine'
 require 'awesome_nested_set'
 require 'kaminari'
 require 'acts_as_blog_owner/base'
+require 'acts_as_commentable/base'
 require 'acts_as_blog_item/base'
 require 'acts_as_community/base'
 require 'acts_as_community_user/base'
@@ -10,7 +11,7 @@ require 'can_favorite_objects/base'
 require 'can_be_favorited/base'
 
 module Inkwell
-  %w{blog community favorite reblog}.each do |feature|
+  %w{blog community favorite reblog comment}.each do |feature|
     mattr_writer "#{feature}_feature".to_sym
 
     define_singleton_method "#{feature}_feature" do

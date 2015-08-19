@@ -3,7 +3,7 @@ module Inkwell
     extend ActiveSupport::Concern
 
     included do
-      has_many :blog_items, class_name: 'Inkwell::BlogItem', as: :blogged_item
+      has_many :blog_items, class_name: 'Inkwell::BlogItem', as: :blogged_item, dependent: :delete_all
       after_create :create_blog_item, if: :need_to_create_blog_item?
 
       def create_blog_item

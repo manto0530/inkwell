@@ -6,7 +6,7 @@ module Inkwell
       attr_accessor :favorited
       def favorited?; !!favorited; end
 
-      has_many :favorited_items, class_name: 'Inkwell::FavoritedItem', as: :favorited
+      has_many :favorited_items, class_name: 'Inkwell::FavoritedItem', as: :favorited, dependent: :delete_all
 
       def favorited_by(page: nil, per_page: nil, order: 'created_at DESC')
         result = favorited_items.includes(:favoriting).order(order)

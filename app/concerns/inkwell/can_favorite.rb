@@ -5,7 +5,7 @@ module Inkwell
     included do
       include ::Inkwell::Timeline
 
-      has_many :favorited_items, class_name: 'Inkwell::FavoritedItem', as: :favoriting
+      has_many :favorited_items, class_name: 'Inkwell::FavoritedItem', as: :favoriting, dependent: :delete_all
 
       def favorite(obj)
         favorited_items.create!(favorited: obj) unless favorite?(obj)

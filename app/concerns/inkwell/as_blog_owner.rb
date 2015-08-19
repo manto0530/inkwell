@@ -5,7 +5,7 @@ module Inkwell
     included do
       include ::Inkwell::Timeline
 
-      has_many :blog_items, class_name: 'Inkwell::BlogItem', as: :blogging_owner
+      has_many :blog_items, class_name: 'Inkwell::BlogItem', as: :blogging_owner, dependent: :delete_all
 
       def blog(page: 1, per_page: nil, order: 'created_at DESC', for_viewer: nil)
         result = blog_items.order(order).includes(:blogged_item).page(page).per(per_page || blog_items_per_page).map do |blog_item|

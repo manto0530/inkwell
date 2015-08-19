@@ -3,6 +3,8 @@ module Inkwell
     extend ActiveSupport::Concern
 
     included do
+      # TODO: add reblogs and favorites and comments count to timelines, blog_item and favoritable
+
       def process_favorite_feature(result, for_viewer: nil)
         if Inkwell.favorite_feature && for_viewer && for_viewer.methods.include?(:favorited_items)
           items_with_favoriting = result.select{|item| item.methods.include?(:favorited=)}
