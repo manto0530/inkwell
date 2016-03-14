@@ -19,7 +19,7 @@ module Inkwell
     belongs_to ::Inkwell::Engine::config.user_table.to_s.singularize.to_sym
     belongs_to :commentable, polymorphic: true
 
-    acts_as_nested_set :order_column => :created_at
+    #acts_as_nested_set :order_column => :created_at
 
     def commentline(options = {})
       options.symbolize_keys!
