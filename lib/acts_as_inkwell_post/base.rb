@@ -55,7 +55,7 @@ module Inkwell
           end
         end
 
-        comments.reverse!
+        #comments.reverse!
       end
 
       def comment_count
